@@ -1,5 +1,7 @@
+use std::convert::From;
 use std::fmt;
-use std::io::{self, BufRead};
+use std::io;
+// use std::io::{self, BufRead};
 
 #[derive(Debug)]
 enum Player {
@@ -50,33 +52,45 @@ impl Board {
     }
 }
 
-fn get_input() -> Result<(String, String), &'static str> {
-    let stdin = io::stdin();
-    let line1 = stdin.lock().lines().next().unwrap().unwrap();
-    let values: Vec<&str> = line1.split(" ").collect();
-    let (row, col) = (
-        match values.get(0) {
-            Some(x) => x,
-            None => return Err("Invalid input!"),
-        },
-        match values.get(1) {
-            Some(x) => x,
-            None => return Err("Invalid input!"),
-        },
-    );
-    println!("Entered [{:?}, {:?}]: ", row, col);
-    let n = String::from(*row);
-    Ok((String::from(*row), String::from(*col)))
+#[derive(Debug)]
+enum InputError {
+    IoError(io::Error),
+    IndexError(&'static str),
+}
+
+impl From<io::Error> for InputError {
+    fn from(error: io::Error) -> Self {
+        InputError::IoError(error)
+    }
+}
+
+fn get_input() -> Result<(u8, u8), InputError> {
+    let mut line = String::new();
+    io::stdin().read_line(&mut line)?;
+
+    let values: Vec<&str> = line.split_whitespace().collect();
+    let values: Vec<u8> = values.iter().filter_map(|x| parse_input(x).ok()).collect();
+    match values.len() {
+        2 => {}
+        _ => return Err(InputError::IndexError("Invalid number of valid inputs")),
+    }
+    let (row, col): (u8, u8) = (*values.get(0).unwrap(), *values.get(1).unwrap());
+
+    Ok((row, col))
+}
+
+fn parse_input(input: &str) -> Result<u8, core::num::ParseIntError> {
+    Ok(String::from(input).parse::<u8>())?
 }
 
 fn main() -> () {
-    let mut board: Board = Board::new();
+    let board: Board = Board::new();
     let player = Player::x;
 
     loop {
         println!("Turn {:?}: Enter [row, col]: ", player);
-        let input = get_input();
-        let (row, col) = match input {
+        // let input = get_input();
+        let (row, col) = match get_input() {
             Err(x) => {
                 println!("{:?}", x);
                 continue;
