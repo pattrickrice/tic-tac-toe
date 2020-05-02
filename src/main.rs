@@ -89,9 +89,9 @@ impl Board {
                     return true;
                 }
             }
-            for (col_index, _) in self.board.iter().enumerate() {
+            for col_index in 0..self.board.len() {
                 let mut won_by_col = true;
-                for (row_index, _) in self.board.iter().enumerate() {
+                for row_index in 0..self.board.len() {
                     let cell = &self.board[row_index][col_index];
                     match cell {
                         cell if cell == current_player => continue,
@@ -103,7 +103,7 @@ impl Board {
                 }
             }
             let mut won_by_diagonal = true;
-            for (index, _) in self.board.iter().enumerate() {
+            for index in 0..self.board.len() {
                 let cell = &self.board[index][index];
                 match cell {
                     cell if cell == current_player => continue,
