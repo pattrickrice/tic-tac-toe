@@ -77,7 +77,7 @@ impl Board {
         // TODO cleanup
         for current_player in [BoardValue::Player(Player::X), BoardValue::Player(Player::O)].iter()
         {
-            for (row_index, row) in self.board.iter().enumerate() {
+            for row in self.board.iter() {
                 let mut won_by_row = true;
                 for cell in row {
                     match cell {
@@ -89,8 +89,7 @@ impl Board {
                     return true;
                 }
             }
-            let mut won_by_col = true;
-            for (col_index, row) in self.board.iter().enumerate() {
+            for (col_index, _) in self.board.iter().enumerate() {
                 let mut won_by_col = true;
                 for (row_index, _) in self.board.iter().enumerate() {
                     let cell = &self.board[row_index][col_index];
