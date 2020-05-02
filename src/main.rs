@@ -1,15 +1,14 @@
 use std::convert::From;
 use std::fmt;
 use std::io;
-// use std::io::{self, BufRead};
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 enum Player {
     X,
     O,
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 enum BoardValue {
     Player(Player),
     Empty(),
@@ -23,6 +22,12 @@ impl fmt::Display for BoardValue {
         }
     }
 }
+
+// impl std::cmp::PartialEq for BoardValue {
+//     fn eq(&self, other: &Self) -> bool {
+//         self.isbn == other.isbn
+//     }
+// }
 #[derive(Debug)]
 struct Board {
     board: Vec<Vec<BoardValue>>,
@@ -52,7 +57,7 @@ impl Board {
     }
 
     pub fn game_over(&self) -> bool {
-        self.board_full()
+        self.board_full() || self.check_for_winner()
     }
 
     pub fn make_move(&mut self, row: usize, col: usize, player: Player) -> Result<(), BoardError> {
@@ -66,6 +71,51 @@ impl Board {
             }
         };
         Ok(())
+    }
+
+    fn check_for_winner(&self) -> bool {
+        // TODO cleanup
+        for current_player in [BoardValue::Player(Player::X), BoardValue::Player(Player::O)].iter()
+        {
+            for (row_index, row) in self.board.iter().enumerate() {
+                let mut won_by_row = true;
+                for cell in row {
+                    match cell {
+                        cell if cell == current_player => continue,
+                        _ => won_by_row = false,
+                    }
+                }
+                if won_by_row {
+                    return true;
+                }
+            }
+            let mut won_by_col = true;
+            for (col_index, row) in self.board.iter().enumerate() {
+                let mut won_by_col = true;
+                for (row_index, _) in self.board.iter().enumerate() {
+                    let cell = &self.board[row_index][col_index];
+                    match cell {
+                        cell if cell == current_player => continue,
+                        _ => won_by_col = false,
+                    }
+                }
+                if won_by_col {
+                    return true;
+                }
+            }
+            let mut won_by_diagonal = true;
+            for (index, _) in self.board.iter().enumerate() {
+                let cell = &self.board[index][index];
+                match cell {
+                    cell if cell == current_player => continue,
+                    _ => won_by_diagonal = false,
+                }
+            }
+            if won_by_diagonal {
+                return true;
+            }
+        }
+        return false;
     }
 
     fn board_full(&self) -> bool {
