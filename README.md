@@ -5,8 +5,8 @@ After reading through "the book" as I've started learning rust, I thought a good
 ## Launching the program
 
 ```bash
-$git clone git@github.com:pattrickrice/tic-tac-toe.git
-$cargo run
+$ git clone git@github.com:pattrickrice/tic-tac-toe.git
+$ cargo run
 ➜  tic-tac-toe git:(master) cargo run             
    Compiling tic-tac-toe v0.1.0 (/home/patrick/tic-tac-toe)
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
