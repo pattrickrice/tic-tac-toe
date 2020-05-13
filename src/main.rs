@@ -23,11 +23,6 @@ impl fmt::Display for BoardValue {
     }
 }
 
-// impl std::cmp::PartialEq for BoardValue {
-//     fn eq(&self, other: &Self) -> bool {
-//         self.isbn == other.isbn
-//     }
-// }
 #[derive(Debug)]
 struct Board {
     board: Vec<Vec<BoardValue>>,
