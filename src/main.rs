@@ -102,15 +102,21 @@ impl Board {
                     return true;
                 }
             }
-            let mut won_by_diagonal = true;
+            let mut won_by_diagonal_left = true;
+            let mut won_by_diagonal_right = true;
             for index in 0..self.board.len() {
                 let cell = &self.board[index][index];
                 match cell {
                     cell if cell == current_player => continue,
-                    _ => won_by_diagonal = false,
+                    _ => won_by_diagonal_left = false,
+                }
+                let cell = &self.board[index][self.board.len() - 1 - index];
+                match cell {
+                    cell if cell == current_player => continue,
+                    _ => won_by_diagonal_right = false,
                 }
             }
-            if won_by_diagonal {
+            if won_by_diagonal_left || won_by_diagonal_right {
                 return true;
             }
         }
