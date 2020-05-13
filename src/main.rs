@@ -174,7 +174,11 @@ fn get_input(max_size: &usize) -> Result<(usize, usize), InputError> {
     let values: Vec<usize> = values.iter().filter_map(|x| parse_input(x).ok()).collect();
     match values.len() {
         2 => {}
-        _ => return Err(InputError::IndexError("Invalid number of valid inputs")),
+        _ => {
+            return Err(InputError::IndexError(
+                "Invalid valid input; example input: 1 3",
+            ))
+        }
     }
     let (row, col): (usize, usize) = (*values.get(0).unwrap(), *values.get(1).unwrap());
     for item in [row, col].iter() {
