@@ -1,6 +1,6 @@
 # Tic Tac Toe in Rust
 
-After reading through "the book" as I've started learning rust, I thought a good starting place for applying what I've learned is building a tic-tac-toe game. The program also uses [box drawing characters](https://en.wikipedia.org/wiki/Box-drawing_character).
+After reading through "the book" as I've started learning rust, I thought a good starting place for applying what I've learned is building a tic-tac-toe game. The program is also an excuse for me to try using [box drawing characters](https://en.wikipedia.org/wiki/Box-drawing_character).
 
 ## Launching the program
 
@@ -24,7 +24,7 @@ Turn X: Enter [row, col]:
 
 ## Room for improvement
 
-Here's a list of known places where this program could be improved in case I decided I want to put more free time into this.
+Here's a list of known places where this program could be improved in case I decide I want to put more free time into this.
 1. I'm sure the code could use a refactor.
 2. Unit tests
 3. Integration tests
