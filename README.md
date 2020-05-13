@@ -24,7 +24,7 @@ Turn X: Enter [row, col]:
 
 ## Room for improvement
 
-Here's a list of known places where this program could be improved in case I decide I want to put more free time into this.
+Here's a list of known places where this program could be improved in case I decide I want to put more free time into it.
 1. I'm sure the code could use a refactor.
 2. Unit tests
 3. Integration tests
